@@ -14,7 +14,7 @@ fi
 
 luaver=~/.luaver/luaver  ##  location
 
-current=$( $luaver current | head -n 2 | tail -n 1 | awk '{print $2}' | sed 's/[lua\-]//' )
+current=$( $luaver current | head -n 2 | tail -n 1 | awk '{print $2}' | sed 's/[lua\-]//g' )
 
 currentjit=$( $luaver current | head -n 3 | tail -n 1 | awk '{print $2}' | sed 's/LuaJIT\-//' )
 
@@ -44,8 +44,8 @@ rm -f $lua_temp  ##  remove, ignore errors
 rm -f $luajit_temp
 
 ##  from line 2, on.  stream-editor removes any chars that don^t match [numbers or expected name]
-$luaver list | tail -n +2 | sed 's/[^0-9.lua\-]//g' > $lua_temp
-$luaver list-luajit | tail -n +2 | sed 's/[^0-9.LuaJIT\-bet]//g' > $luajit_temp
+$luaver list | tail -n +2 | sed 's/[^0-9.lua-]//g' > $lua_temp
+$luaver list-luajit | tail -n +2 | sed 's/[^0-9.LuaJITbet-]//g' > $luajit_temp
 
 while read line ; do
     $luaver use $line
