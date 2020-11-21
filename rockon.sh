@@ -38,27 +38,29 @@ currentjit=$( $luaver current | head -n 3 | tail -n 1 | awk '{print $2}' | sed '
     ##  5.3.5
 
 lua_temp='luaver_list.txt'
-luajit_temp='luaver_list-luajit.txt'
+##  luajit_temp='luaver_list-luajit.txt'
 
 rm -f $lua_temp  ##  remove, ignore errors
-rm -f $luajit_temp
+##  rm -f $luajit_temp
 
-##  from line 2, on.  stream-editor removes any chars that don^t match [numbers or expected name]
+##  from line 2, on.  stream-editor removes any chars that don't match [numbers or expected name]
 $luaver list | tail -n +2 | sed 's/[^0-9.lua-]//g' > $lua_temp
-$luaver list-luajit | tail -n +2 | sed 's/[^0-9.LuaJITbet-]//g' > $luajit_temp
+##  $luaver list-luajit | tail -n +2 | sed 's/[^0-9.LuaJITbet-]//g' > $luajit_temp
 
 while read line ; do
     $luaver use $line
-    luarocks install $1
+    revision=$( echo $line | sed 's/\.[0-9]$//' )
+    luarocks --lua-version $revision install $1
 done < $lua_temp
 
-while read line ; do
-    $luaver use-luajit $line
-    luarocks install $1
-done < $luajit_temp
+##  while read line ; do
+##      $luaver use-luajit $line
+##      revision=$( $line | sed 's/\.[0-9]$//' )
+##      luarocks install $1
+##  done < $luajit_temp
 
 rm -f $lua_temp  ##  remove, ignore errors
-rm -f $luajit_temp
+##  rm -f $luajit_temp
 
 ##=============================================================================
 
