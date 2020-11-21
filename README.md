@@ -16,3 +16,4 @@ function rockon() { ./Programming/Scripts/rockon.sh $1 ;}
 so you can then call script from any directory  
 
     rockon luasocket
+    rockon luasec
